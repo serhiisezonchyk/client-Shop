@@ -5,16 +5,14 @@ const $host = axios.create({
 });
 
 const $authHost = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
-const authInterceptor = config =>{
-    config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
-    return config}
+const authInterceptor = (config) => {
+  config.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
+  return config;
+};
 
-$authHost.interceptors.request.use(authInterceptor)
+$authHost.interceptors.request.use(authInterceptor);
 
-export{
-    $host,
-    $authHost
-}
+export { $host, $authHost };

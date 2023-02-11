@@ -4,18 +4,18 @@ import App from "./App";
 import BasketStore from "./store/BasketStore";
 import ProductStore from "./store/ProductStore";
 import UserStore from "./store/UserStore";
-// import { Provider } from "react-redux";
-// import store from './redux/store';
 export const Context = createContext(null);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Context.Provider value={{
-      user: new UserStore(),
-      product: new ProductStore(),
-      basket: new BasketStore(),
-    }}>
+    <Context.Provider
+      value={{
+        user: new UserStore(),
+        product: new ProductStore(),
+        basket: new BasketStore(),
+      }}
+    >
       <App />
     </Context.Provider>
   </React.StrictMode>

@@ -1,35 +1,36 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Dropdown, Modal, Row, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { fetchBrands, fetchOneBrand } from "../../http/brandApi";
-import { fetchImageProduct, fetchOneProduct, updateProduct } from "../../http/productApi";
+import { fetchBrands } from "../../http/brandApi";
+import { updateProduct } from "../../http/productApi";
 import { fetchTypes } from "../../http/typeApi";
 import { Context } from "../../index";
-import { SHOP_ROUTE } from "../../utils/consts";
 
-
-  
 const UpdateProduct = observer(({ show, onHide, prod }) => {
   const { product } = useContext(Context);
-    const navigate = useNavigate();
   const [info, setInfo] = useState(prod.info);
   const [name, setName] = useState(prod.name);
   const [price, setPrice] = useState(prod.price);
-  const [brand, setBrand] = useState(prod.brandId);
-  const [type, setType] = useState(prod.typeId);
   const [file, setFile] = useState(prod.img);
   useEffect(() => {
     fetchTypes().then((data) => {
       product.setTypes(data);
     });
     fetchBrands().then((data) => product.setBrands(data));
-    product.setSelectedBrand(product.brands.find((brand)=>{return brand.id === prod.brandId}))
-    product.setSelectedType(product.types.find((type)=>{return type.id === prod.typeId}))
+    product.setSelectedBrand(
+      product.brands.find((brand) => {
+        return brand.id === prod.brandId;
+      })
+    );
+    product.setSelectedType(
+      product.types.find((type) => {
+        return type.id === prod.typeId;
+      })
+    );
   }, []);
 
   const addInfo = () => {
-    console.log(info)
+    console.log(info);
     setInfo([...info, { title: "", description: "", id: Date.now() }]);
   };
   const removeInfo = (id) => {
@@ -37,9 +38,7 @@ const UpdateProduct = observer(({ show, onHide, prod }) => {
   };
 
   const changeInfo = (key, value, id) => {
-    setInfo(
-      info.map((i) => (i.id === id ? { ...i, [key]: value } : i))
-    );
+    setInfo(info.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
   };
   const selectFile = (e) => {
     setFile(e.target.files[0]);
@@ -52,7 +51,7 @@ const UpdateProduct = observer(({ show, onHide, prod }) => {
     formData.append("brandId", product.selectedBrand.id);
     formData.append("typeId", product.selectedType.id);
     formData.append("info", JSON.stringify(info));
-    console.log(formData)
+    console.log(formData);
     updateProduct(prod.id, formData).then((data) => onHide());
   };
   return (
@@ -108,7 +107,7 @@ const UpdateProduct = observer(({ show, onHide, prod }) => {
             placeholder="Price..."
             type="number"
           />
-          <Form.Control onChange={selectFile} className="mt-3" type="file"/>
+          <Form.Control onChange={selectFile} className="mt-3" type="file" />
           <hr />
           <Button variant={"outline-dark"} onClick={addInfo}>
             Add new Field info
@@ -118,9 +117,7 @@ const UpdateProduct = observer(({ show, onHide, prod }) => {
               <Col md={4}>
                 <Form.Control
                   value={i.title}
-                  onChange={(e) =>
-                    changeInfo("title", e.target.value, i.id)
-                  }
+                  onChange={(e) => changeInfo("title", e.target.value, i.id)}
                   placeholder="Name..."
                 />
               </Col>

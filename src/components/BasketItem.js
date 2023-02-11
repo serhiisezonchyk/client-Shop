@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../index";
 import { fetchOneBrand } from "../http/brandApi";
 import { PRODUCT_ROUTE } from "../utils/consts";
-import { deleteBasketProduct, fetchBasketProduct } from "../http/basketApi";
+import { deleteBasketProduct } from "../http/basketApi";
 
 const BasketItem = ({ product }) => {
-  const { user, basket } = useContext(Context);
+  const { user } = useContext(Context);
   const navigate = useNavigate();
   const [brand, setBrand] = useState("");
   useEffect(() => {
@@ -33,10 +33,9 @@ const BasketItem = ({ product }) => {
         <Button
           variant="outline-danger"
           onClick={() => {
-            confirm("Delete this product from basket?")
-              ? deleteBasketProduct(product.id, user.user.id)
-              : "";
-              window.location.reload()
+            if (window.confirm("Delete this product from basket?"))
+              deleteBasketProduct(product.id, user.user.id);
+            window.location.reload();
           }}
         >
           Delete

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, Image } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { Card, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { fetchOneBrand } from "../http/brandApi";
 import { PRODUCT_ROUTE } from "../utils/consts";
 import getStarsArray from "../utils/getStarsArray";

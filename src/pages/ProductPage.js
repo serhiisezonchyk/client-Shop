@@ -1,13 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Col,
-  Container,
-  Image,
-  Row,
-  Form,
-  Card,
-  Button,
-} from "react-bootstrap";
+import { Col, Container, Row, Card, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../index";
 import { fetchOneBrand } from "../http/brandApi";
@@ -15,12 +7,15 @@ import { deleteProduct, fetchOneProduct } from "../http/productApi";
 import getStarsArray from "../utils/getStarsArray";
 import { SHOP_ROUTE } from "../utils/consts";
 import UpdateProduct from "../components/models/UpdateProduct";
-import { createBasketProduct, deleteBasketProduct, fetchOneBasketProduct } from "../http/basketApi";
-
+import {
+  createBasketProduct,
+  deleteBasketProduct,
+  fetchOneBasketProduct,
+} from "../http/basketApi";
 
 const ProductPage = () => {
   const navigate = useNavigate();
-  const { user, basket } = useContext(Context);
+  const { user } = useContext(Context);
   const [product, setProduct] = useState({ info: [] });
   const [brand, setBrand] = useState("");
   const [raiting, setRaiting] = useState([]);
@@ -41,16 +36,16 @@ const ProductPage = () => {
   }, []);
 
   const clickBasketButton = async () => {
-    if(isProdInBasket){
-      deleteBasketProduct(id, user.user.id)
-      setIsProdInBasket(false)
-    }else{
-      const basket_product={
+    if (isProdInBasket) {
+      deleteBasketProduct(id, user.user.id);
+      setIsProdInBasket(false);
+    } else {
+      const basket_product = {
         userId: user.user.id,
-        productId: id
-      }
+        productId: id,
+      };
       createBasketProduct(basket_product);
-      setIsProdInBasket(true)
+      setIsProdInBasket(true);
     }
   };
 
@@ -86,9 +81,8 @@ const ProductPage = () => {
                   className="ms-3"
                   variant="outline-danger"
                   onClick={() => {
-                    confirm("Delete this product?")
-                      ? deleteProduct(product.id)
-                      : "";
+                    if (window.confirm("Delete this product?"))
+                      deleteProduct(product.id);
                     navigate(SHOP_ROUTE);
                   }}
                 >
@@ -108,11 +102,19 @@ const ProductPage = () => {
               </Col>
               <Col>
                 {isProdInBasket ? (
-                  <Button className="mt-2" variant="danger" onClick={clickBasketButton}>
+                  <Button
+                    className="mt-2"
+                    variant="danger"
+                    onClick={clickBasketButton}
+                  >
                     Remove from basket
                   </Button>
                 ) : (
-                  <Button className="mt-2" variant="success" onClick={clickBasketButton}>
+                  <Button
+                    className="mt-2"
+                    variant="success"
+                    onClick={clickBasketButton}
+                  >
                     To basket
                   </Button>
                 )}
@@ -158,6 +160,5 @@ const ProductPage = () => {
     </Container>
   );
 };
-
 
 export default ProductPage;

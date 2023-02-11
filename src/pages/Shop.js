@@ -11,15 +11,15 @@ import { fetchProducts } from "../http/productApi";
 import Pages from "../components/Pages";
 
 const Shop = observer(() => {
-  const { product, user } = useContext(Context);
+  const { product} = useContext(Context);
 
   useEffect(() => {
     fetchTypes().then((data) => product.setTypes(data));
     fetchBrands().then((data) => product.setBrands(data));
-    fetchProducts(null, null,product.page,3).then(data=>{
+    fetchProducts(null, null, product.page, 3).then((data) => {
       product.setProducts(data.rows);
       product.setTotalCount(data.count);
-    })
+    });
   }, []);
 
   useEffect(() => {
@@ -32,12 +32,12 @@ const Shop = observer(() => {
       product.setProducts(data.rows);
       product.setTotalCount(data.count);
     });
-  }, [product.page, product.selectedType.id, product.selectedBrand.id,]);
+  }, [product.page, product.selectedType.id, product.selectedBrand.id]);
 
   return (
     <Container>
-      <Row className="mt-2" >
-        <Col md={3} style = {{borderRight: 2+'px solid darkgray'}}>
+      <Row className="mt-2">
+        <Col md={3} style={{ borderRight: 2 + "px solid darkgray" }}>
           <p className="ms-3 pt-2">Categories</p>
           <TypeBar />
           <BrandBar />

@@ -13,8 +13,6 @@ const Pages = observer(() => {
   console.log(pages);
   return (
     <Pagination className="mt-3 fixed-bottom justify-content-center align-items-center">
-      <Pagination.First />
-      <Pagination.Prev />
       {pages.map((page) => (
         <Pagination.Item
           key={page}
@@ -24,8 +22,6 @@ const Pages = observer(() => {
           {page}
         </Pagination.Item>
       ))}
-      <Pagination.Next />
-      <Pagination.Last />
     </Pagination>
   );
 });
